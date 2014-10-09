@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+<head>
+    <META NAME="viewport" CONTENT="width=device-width, height=device-height, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="example.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script data-require="angular.js@1.2.x" src="http://code.angularjs.org/1.2.16/angular.js" data-semver="1.2.16"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.underscore.js"></script>
+    <script src="angular-google-maps.js"></script>
+    <script src="free-draw-polygons.js"></script>
+    <title>Map</title>
+</head>
+
+<body>
+<div data-ng-controller="ctrl" class="lawnTracerContainer">
+    <div class="mapWrapper">
+        <google-map id="map"
+             center="center"
+             pan="map.pan"
+             zoom="map.zoom">
+
+            <!--<map-control template="draw.tpl.html" position="top-right" index="1" controller="ctrl"></map-control>
+            <map-control template="clear.tpl.html" position="top-right" index="1" controller="ctrl"></map-control>
+            <map-control template="inputs.tpl.html" position="top-left" index="1" controller="ctrl"></map-control>-->
+
+            <nggmap-free-draw-polygons polygons="map.polys" draw="map.draw" ></nggmap-free-draw-polygons>
+        </google-map>
+    </div>
+    <div class="form-group map userIntContainer">
+        <button class="btn btn-lg btn-primary"  ng-click="clearWidget.controlClick()">{{clearWidget.controlText}}</button>
+        <button ng-disabled="showArea" class="btn btn-lg btn-primary"  ng-click="drawWidget.controlClick()">{{drawWidget.controlText}}</button><br/>
+        <label for="MapLat">Lat:</label>
+        <input class="form-control" id="MapLat" ng-model="center.latitude" placeholder="Latitude">
+        <label for="MapLng">Lng:</label>
+        <input class="form-control" id="MapLng" ng-model="center.longitude" placeholder="Longitude">
+        <span ng-repeat="p in map.polys" class="animate-show" ng-show="showArea">Your lawn has area of:{{calculateArea(p)}} sq mt.</span>
+    </div>
+    <!-- <ul>
+        <li ng-repeat="p in map.polys"></li>
+        <li ng-repeat="p in map.polys">{{p.getPath()}}</li>
+    </ul> -->
+</div>
+
+</body>
+
+</html>
